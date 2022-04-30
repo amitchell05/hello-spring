@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@ResponseBody
+@RequestMapping("hello")
 public class HelloController {
 
     // Handles requests at path /hello
@@ -15,27 +17,26 @@ public class HelloController {
 //    }
 
     // Handles requests at path /goodbye
+    // lives at /hello/goodbye
     @GetMapping("goodbye")
-    @ResponseBody
     public String goodbye() {
         return "Goodbye, Spring!";
     }
 
     // Handles request of the form /hello?name=LaunchCode
     // Example of creating a dynamic request handler
-    @RequestMapping(value = "hello", method = {RequestMethod.GET, RequestMethod.POST})
-    @ResponseBody
+    // lives at /hello/hello
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
     public String helloWithQueryParam(@RequestParam String name) {
         return "Hello, " + name + "!";
     }
 
     // Handles requests of the form /hello/launchcode
-    @GetMapping("hello/{name}")
-    @ResponseBody
+    @GetMapping("{name}")
     public String helloWithPathParam(@PathVariable String name) { return "Hello, " + name + "!"; }
 
+    // lives at /hello/form
     @GetMapping("form")
-    @ResponseBody
     public String helloForm() {
         return "<html>" +
                 "<body>" +
